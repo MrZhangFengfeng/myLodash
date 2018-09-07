@@ -289,3 +289,29 @@ function getMaxCount(arr,rank,rankType){
 function removeArrayForValue(arr,val,type){
     return (arr.filter(function(item){return type==='%'?item.indexOf(val)==-1:item!==val}))
 }
+
+/*
+* 模糊搜索  北京-直辖。  随便输入北  北京  直辖   北直   都可以搜索岛北京-直辖
+*/
+
+    function fuzzySearch(keywords, arr, key) {
+      keywords = keywords.split('')
+      const reg = new RegExp(keywords.join('.*'))
+      const resultArr = []
+      if (key.length > 0) {
+        // 适用于item为obj的
+        for (let i = 0; i < arr.length; i++) {
+          if (reg.exec(arr[i][key])) {
+            resultArr.push(arr[i])
+          }
+        }
+      } else {
+        // 适用于字符串数组
+        for (let i = 0; i < arr.length; i++) {
+          if (reg.exec(arr[i])) {
+            resultArr.push(arr[i])
+          }
+        }
+      }
+      return resultArr
+    }
